@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>I ❤️ CARBs — CARB Compliance Tool for Trucks</title>
+  <meta name="description" content="Find CARB-legal aftermarket parts, generate compliance forms, and prepare for California smog checks. Silverado, Sierra, F-150, Tundra, Tacoma, Colorado, Ranger, Avalanche.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ═══ CONSENT MODAL ═══ -->
+  <div id="consent-modal" style="position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:99999;display:flex;align-items:center;justify-content:center;padding:1rem;font-family:system-ui,sans-serif;">
+    <div style="background:#141b2d;border:1px solid #2a3550;border-radius:16px;padding:2.5rem;max-width:520px;width:100%;box-shadow:0 24px 64px rgba(0,0,0,0.6);">
+      <div style="text-align:center;font-size:2.5rem;margin-bottom:0.5rem;">⚖️</div>
+      <h2 style="text-align:center;font-size:1.3rem;margin:0 0 1rem;color:#f1f5f9;">Terms of Use &amp; Disclaimer</h2>
+      <div style="max-height:250px;overflow-y:auto;font-size:0.82rem;color:#8896b0;margin-bottom:1.5rem;padding:1rem;background:#0a0f1a;border-radius:10px;border:1px solid #1e2a42;line-height:1.6;">
+        <p style="margin:0 0 0.5rem;"><strong style="color:#cbd5e1;">By using this tool, you agree that:</strong></p>
+        <ul style="padding-left:1.2rem;margin:0;">
+          <li style="margin-bottom:0.4rem;">This tool is for <strong>informational purposes only</strong> — not legal or professional advice.</li>
+          <li style="margin-bottom:0.4rem;">CARB EO data is "as-is" and <strong>may contain errors</strong>.</li>
+          <li style="margin-bottom:0.4rem;">You must verify with the <strong>official CARB database</strong> before purchasing.</li>
+          <li style="margin-bottom:0.4rem;">Creators assume <strong>no liability</strong> for failed inspections or fines.</li>
+          <li>All data stays on <strong>your device only</strong>.</li>
+        </ul>
+      </div>
+      <div style="text-align:center;">
+        <button onclick="document.getElementById('consent-modal').style.display='none';localStorage.setItem('carbTool_consent','accepted');" style="background:linear-gradient(135deg,#f59e0b,#d97706);color:#000;font-weight:700;padding:0.85rem 2.5rem;border:none;border-radius:10px;font-size:1.05rem;cursor:pointer;letter-spacing:0.02em;transition:transform 0.15s;">I Understand &amp; Accept</button>
+      </div>
+    </div>
+  </div>
+  <script>if(localStorage.getItem('carbTool_consent')==='accepted'){document.getElementById('consent-modal').style.display='none';}</script>
+
+  <!-- ═══ DISCLAIMER BANNER ═══ -->
+  <div class="disclaimer-banner no-print" id="disclaimer-banner">
+    <span>⚠️ <strong>Not legal advice.</strong> Always verify with the <a href="https://ww2.arb.ca.gov/executive-orders" target="_blank">official CARB database</a>.</span>
+    <button onclick="document.getElementById('disclaimer-banner').style.display='none'" aria-label="Dismiss">&times;</button>
+  </div>
+
+  <!-- ═══ TOAST CONTAINER ═══ -->
+  <div id="toast-container"></div>
+
+  <!-- ═══ WEBSITE HEADER ═══ -->
+  <header class="site-header no-print" id="site-header">
+    <div class="header-inner">
+      <a class="header-brand" href="javascript:navigateTo('home')">
+        I <span class="heart">❤️</span> CARBs
+      </a>
+      <nav class="header-nav">
+        <a class="nav-link" data-section="home" href="javascript:navigateTo('home')">Home</a>
+        <a class="nav-link" data-section="garage" href="javascript:navigateTo('garage')">My Garage</a>
+        <a class="nav-link" data-section="marketplace" href="javascript:navigateTo('marketplace')">Marketplace</a>
+        <a class="nav-link" data-section="compliance" href="javascript:navigateTo('compliance')">Compliance</a>
+        <a class="nav-link" data-section="knowledge" href="javascript:navigateTo('knowledge')">Knowledge Base</a>
+      </nav>
+      <button class="mobile-menu-btn no-print" id="mobile-menu-btn" onclick="document.getElementById('site-header').classList.toggle('menu-open')" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ═══ HERO / HOME PAGE ═══ -->
+  <section id="section-home" class="app-section active">
+    <div class="hero">
+      <div class="hero-content">
+        <h1 class="hero-title">I <span class="heart">❤️</span> CARBs</h1>
+        <p class="hero-tagline">The easiest way to find <strong>CARB-legal</strong> aftermarket parts for your truck — and stay smog-legal in California.</p>
+        <div class="hero-cta">
+          <button class="btn btn-primary btn-lg" onclick="navigateTo('garage')">🚛 Set Up My Vehicle</button>
+          <button class="btn btn-secondary btn-lg" onclick="navigateTo('marketplace')">🛒 Browse Parts</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-container">
+      <!-- Feature Cards -->
+      <div class="features-grid">
+        <div class="feature-card" onclick="navigateTo('garage')">
+          <div class="feature-icon">🚛</div>
+          <h3>My Garage</h3>
+          <p>Add your truck details — year, model, engine — and track what parts you've installed. Saves locally on your device.</p>
+        </div>
+        <div class="feature-card" onclick="navigateTo('marketplace')">
+          <div class="feature-icon">🛒</div>
+          <h3>Parts Marketplace</h3>
+          <p>Browse 160+ CARB-legal parts with real EO numbers. Filter by your vehicle, see prices, and buy from trusted retailers.</p>
+        </div>
+        <div class="feature-card" onclick="navigateTo('compliance')">
+          <div class="feature-icon">📋</div>
+          <h3>Compliance Center</h3>
+          <p>Generate smog prep sheets, modification declarations, and BAR referee forms — auto-filled with your vehicle info.</p>
+        </div>
+        <div class="feature-card" onclick="navigateTo('knowledge')">
+          <div class="feature-icon">📚</div>
+          <h3>Knowledge Base</h3>
+          <p>Look up CARB terms, emissions standards, Section 177 states, and California smog test types — all in plain English.</p>
+        </div>
+      </div>
+
+      <!-- Supported Vehicles -->
+      <div class="card" style="text-align:center;margin-top:2rem;">
+        <h3 class="card-title">Supported Vehicles</h3>
+        <div class="vehicle-badges">
+          <span class="vehicle-badge">Chevy Silverado</span>
+          <span class="vehicle-badge">GMC Sierra</span>
+          <span class="vehicle-badge">Ford F-150</span>
+          <span class="vehicle-badge">Toyota Tundra</span>
+          <span class="vehicle-badge">Toyota Tacoma</span>
+          <span class="vehicle-badge">Chevy Colorado</span>
+          <span class="vehicle-badge">GMC Canyon</span>
+          <span class="vehicle-badge">Ford Ranger</span>
+          <span class="vehicle-badge">Chevy Avalanche</span>
+        </div>
+      </div>
+
+      <!-- How It Works -->
+      <div class="how-it-works">
+        <h3>How It Works</h3>
+        <div class="steps-grid">
+          <div class="step">
+            <div class="step-num">1</div>
+            <h4>Add Your Vehicle</h4>
+            <p>Enter your truck's year, model, and engine in My Garage.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <h4>Find Legal Parts</h4>
+            <p>Browse the Marketplace — every part shows its CARB EO number and legality status.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <h4>Stay Compliant</h4>
+            <p>Generate compliance documents and prep for your next smog check — all auto-filled.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ SECTION: MY GARAGE ═══ -->
+  <section id="section-garage" class="app-section">
+    <div class="section-container">
+      <div class="section-header">
+        <h2>🚛 My Garage</h2>
+        <p class="section-subtitle">Build your vehicle profile</p>
+      </div>
+
+      <div class="garage-builder">
+        <!-- LEFT: 3D Vehicle Profile Card -->
+        <div class="vb-card-wrapper">
+          <div class="vb-card" id="vb-card">
+            <div class="vb-card-shine"></div>
+            <div class="vb-card-top">
+              <span class="vb-card-badge">VEHICLE PROFILE</span>
+              <div class="vb-progress-ring" id="vb-progress-ring">
+                <svg viewBox="0 0 40 40">
+                  <circle cx="20" cy="20" r="17" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="3"/>
+                  <circle cx="20" cy="20" r="17" fill="none" stroke="#f59e0b" stroke-width="3" stroke-dasharray="106.8" stroke-dashoffset="106.8" stroke-linecap="round" id="vb-progress-circle" transform="rotate(-90 20 20)"/>
+                </svg>
+                <span id="vb-progress-pct">0%</span>
+              </div>
+            </div>
+            <div class="vb-vehicle-visual">
+              <div class="vb-truck-icon" id="vb-truck-icon">🚛</div>
+              <div class="vb-vehicle-name" id="vb-vehicle-name">Select Your Vehicle</div>
+              <div class="vb-vehicle-engine" id="vb-vehicle-engine"></div>
+            </div>
+            <div class="vb-specs-grid" id="vb-specs-grid">
+              <div class="vb-spec" id="vb-spec-year"><span class="vb-spec-label">Year</span><span class="vb-spec-val">—</span></div>
+              <div class="vb-spec" id="vb-spec-make"><span class="vb-spec-label">Make/Model</span><span class="vb-spec-val">—</span></div>
+              <div class="vb-spec" id="vb-spec-engine"><span class="vb-spec-label">Engine</span><span class="vb-spec-val">—</span></div>
+              <div class="vb-spec" id="vb-spec-plate"><span class="vb-spec-label">Plate</span><span class="vb-spec-val">—</span></div>
+              <div class="vb-spec" id="vb-spec-vin"><span class="vb-spec-label">VIN</span><span class="vb-spec-val">—</span></div>
+              <div class="vb-spec" id="vb-spec-efn"><span class="vb-spec-label">EFN</span><span class="vb-spec-val">—</span></div>
+            </div>
+            <div class="vb-card-footer">
+              <div class="vb-parts-count"><span id="vb-parts-num">0</span> parts installed</div>
+              <div class="vb-smog-status" id="vb-smog-mini"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: Build Form -->
+        <div class="vb-form-panel">
+          <div class="vb-form-section">
+            <h3 class="vb-form-title">⚙️ Vehicle Details</h3>
+            <div class="vb-form-grid">
+              <div class="vb-field">
+                <label for="vehicle-year">Year</label>
+                <select id="vehicle-year"><option value="">Select Year</option></select>
+              </div>
+              <div class="vb-field">
+                <label for="vehicle-model">Make / Model</label>
+                <select id="vehicle-model"><option value="">Select Model</option></select>
+              </div>
+              <div class="vb-field">
+                <label for="vehicle-engine">Engine</label>
+                <select id="vehicle-engine"><option value="">Select Engine</option></select>
+              </div>
+            </div>
+          </div>
+
+          <div class="vb-form-section">
+            <h3 class="vb-form-title">📋 Registration Info</h3>
+            <div class="vb-form-grid">
+              <div class="vb-field">
+                <label for="vehicle-plate">License Plate</label>
+                <input type="text" id="vehicle-plate" placeholder="e.g. 7ABC123" oninput="typeof updateVBCard==='function'&&updateVBCard()">
+              </div>
+              <div class="vb-field">
+                <label for="vehicle-vin">VIN</label>
+                <input type="text" id="vehicle-vin" placeholder="17-character VIN" oninput="typeof updateVBCard==='function'&&updateVBCard()">
+              </div>
+              <div class="vb-field">
+                <label for="vehicle-efn">Engine Family # (EFN)</label>
+                <input type="text" id="vehicle-efn" placeholder="Found on VECI label" oninput="typeof updateVBCard==='function'&&updateVBCard()">
+              </div>
+            </div>
+          </div>
+
+          <div class="vb-form-section">
+            <h3 class="vb-form-title">🕐 Smog Check</h3>
+            <div class="vb-field">
+              <label for="smog-reg-date">Registration Renewal Date</label>
+              <input type="date" id="smog-reg-date" onchange="typeof updateSmogCountdown==='function'&&updateSmogCountdown();typeof updateVBCard==='function'&&updateVBCard()">
+            </div>
+            <div id="smog-countdown-display"></div>
+          </div>
+
+          <div class="vb-form-actions">
+            <button class="btn btn-primary" onclick="typeof saveCurrentVehicle==='function'&&saveCurrentVehicle()">💾 Save Vehicle</button>
+            <button class="btn btn-secondary" onclick="typeof parseEFN==='function'&&parseEFN()">🔍 Decode EFN</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Saved Vehicles -->
+      <div class="card" id="saved-vehicles-card" style="margin-top:1.5rem;">
+        <h3 class="card-title">💾 Saved Vehicles</h3>
+        <div id="saved-vehicles-list">
+          <p class="empty-state">No saved vehicles yet.</p>
+        </div>
+      </div>
+
+      <!-- My Installed Parts -->
+      <div class="card" id="my-parts-card" style="margin-top:1rem;">
+        <div class="card-title-row">
+          <h3 class="card-title">🔧 My Installed Parts</h3>
+          <span class="badge badge-count" id="parts-count-badge">0</span>
+        </div>
+        <div id="installed-parts-list">
+          <p class="empty-state">No parts yet. Browse the <a href="javascript:navigateTo('marketplace')">Marketplace</a> and add parts.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ SECTION 2: MARKETPLACE ═══ -->
+  <section id="section-marketplace" class="app-section">
+    <div class="section-container">
+      <div class="section-header">
+        <h2>🛒 Parts Marketplace</h2>
+        <p class="section-subtitle">Find CARB-legal parts for your <strong id="marketplace-vehicle-label">vehicle</strong></p>
+      </div>
+
+      <!-- Top controls: vehicle + search + legal toggle -->
+      <div class="marketplace-controls">
+        <div class="mp-vehicle-select">
+          <label>Vehicle:</label>
+          <select id="mp-vehicle-filter" onchange="typeof mpSetVehicle==='function'&&mpSetVehicle(this.value)">
+            <option value="All">All Vehicles</option>
+          </select>
+        </div>
+        <div class="mp-search">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="marketplace-search" placeholder="Search parts..." autocomplete="off" oninput="typeof mpSearch==='function'&&mpSearch()">
+        </div>
+        <label class="mp-toggle">
+          <input type="checkbox" id="legal-only-toggle" onchange="typeof mpRefresh==='function'&&mpRefresh()"> Legal Only
+        </label>
+      </div>
+
+      <!-- STEP 1: Category selector (visible by default) -->
+      <div id="mp-step-categories">
+        <h3 class="mp-step-title">Choose a Category</h3>
+        <div id="category-grid" class="mp-category-grid"></div>
+        <div id="mp-results-count" class="mp-results-count"></div>
+      </div>
+
+      <!-- STEP 2: Parts list (hidden until category selected) -->
+      <div id="mp-step-parts" style="display:none;">
+        <div class="mp-parts-header">
+          <button class="btn btn-ghost" onclick="typeof mpBackToCategories==='function'&&mpBackToCategories()">← Back to Categories</button>
+          <h3 id="mp-category-title" class="mp-step-title"></h3>
+          <span id="mp-parts-count" class="badge badge-count">0</span>
+        </div>
+        <div id="products-grid" class="mp-products-grid"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ SECTION 3: COMPLIANCE CENTER ═══ -->
+  <section id="section-compliance" class="app-section">
+    <div class="section-container">
+      <div class="section-header">
+        <h2>📋 Compliance Center</h2>
+        <p class="section-subtitle">Prepare for smog checks, generate forms, find BAR referee stations</p>
+      </div>
+
+      <div class="sub-nav" id="compliance-sub-nav">
+        <button class="pill active" data-sub="smog" onclick="showComplianceTab('smog')">🔍 Smog Prep</button>
+        <button class="pill" data-sub="mod-dec" onclick="showComplianceTab('mod-dec')">📄 Mod Declaration</button>
+        <button class="pill" data-sub="bar" onclick="showComplianceTab('bar')">🏛️ BAR Referee</button>
+        <button class="pill" data-sub="eo-card" onclick="showComplianceTab('eo-card')">💳 EO Card</button>
+        <button class="pill" data-sub="export" onclick="showComplianceTab('export')">📥 Export PDF</button>
+      </div>
+
+      <div id="compliance-content">
+        <p class="empty-state">Select an option above to get started.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ SECTION 4: KNOWLEDGE BASE ═══ -->
+  <section id="section-knowledge" class="app-section">
+    <div class="section-container">
+      <div class="section-header">
+        <h2>📚 Knowledge Base</h2>
+        <p class="section-subtitle">Learn about CARB rules, emissions laws, and compliance requirements</p>
+      </div>
+
+      <div class="search-bar">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="knowledge-search" placeholder="Search terms, laws, acronyms..." autocomplete="off" oninput="typeof filterKnowledge==='function'&&filterKnowledge()">
+      </div>
+
+      <div class="view-toggle" id="knowledge-view-toggle">
+        <button class="toggle-btn active" data-view="az" onclick="setKnowledgeView('az')">A–Z</button>
+        <button class="toggle-btn" data-view="topic" onclick="setKnowledgeView('topic')">By Topic</button>
+      </div>
+
+      <div id="knowledge-content"></div>
+    </div>
+  </section>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="app-footer no-print">
+    <div class="footer-inner">
+      <div class="footer-disclaimer">
+        <p><strong>⚠️ Legal Disclaimer:</strong> This tool is for <strong>informational purposes only</strong>. Always verify EO numbers against the <a href="https://ww2.arb.ca.gov/executive-orders" target="_blank">official CARB database</a>. The creators assume <strong>no liability</strong> for failed inspections, fines, or legal consequences.</p>
+      </div>
+      <div class="footer-meta">
+        <p><strong>FTC Disclosure:</strong> Buy links are for convenience. We may receive compensation from qualifying purchases.</p>
+        <p><strong>Trademark Notice:</strong> All brand names and trademarks are property of their respective owners. This tool is <strong>not affiliated with or endorsed by</strong> any manufacturer.</p>
+      </div>
+      <p class="footer-contacts">CARB: (800) 242-4450 · BAR Referee: 1-800-622-7733 · EPA: (800) 828-4EPA</p>
+    </div>
+  </footer>
+
+  <!-- ═══ SCRIPTS ═══ -->
+  <script src="app.js"></script>
+  <script>
+    // ── Navigation ──
+    function navigateTo(sectionName) {
+      var sections = document.querySelectorAll('.app-section');
+      for (var i = 0; i < sections.length; i++) {
+        sections[i].classList.remove('active');
+      }
+      var target = document.getElementById('section-' + sectionName);
+      if (target) target.classList.add('active');
+
+      // Update header nav active state
+      var links = document.querySelectorAll('.nav-link');
+      for (var j = 0; j < links.length; j++) {
+        links[j].classList.remove('active');
+        if (links[j].getAttribute('data-section') === sectionName) {
+          links[j].classList.add('active');
+        }
+      }
+
+      // Close mobile menu if open
+      var header = document.getElementById('site-header');
+      if (header) header.classList.remove('menu-open');
+
+      // Trigger section-specific rendering
+      try {
+        if (sectionName === 'marketplace' && typeof renderMarketplace === 'function') renderMarketplace();
+        if (sectionName === 'compliance' && typeof showComplianceTab === 'function') showComplianceTab('smog');
+        if (sectionName === 'knowledge' && typeof renderKnowledgeBase === 'function') renderKnowledgeBase();
+        if (sectionName === 'garage' && typeof renderGarage === 'function') renderGarage();
+      } catch(e) { console.error('Nav render error:', e); }
+
+      window.scrollTo(0, 0);
+    }
+
+    // ── Compliance sub-tabs ──
+    function showComplianceTab(tabName) {
+      var pills = document.querySelectorAll('#compliance-sub-nav .pill');
+      for (var k = 0; k < pills.length; k++) {
+        pills[k].classList.remove('active');
+        if (pills[k].getAttribute('data-sub') === tabName) pills[k].classList.add('active');
+      }
+      try {
+        if (typeof renderComplianceTab === 'function') renderComplianceTab(tabName);
+      } catch(e) { console.error('Compliance render error:', e); }
+    }
+
+    // ── Knowledge Base view toggle ──
+    function setKnowledgeView(view) {
+      var btns = document.querySelectorAll('#knowledge-view-toggle .toggle-btn');
+      for (var m = 0; m < btns.length; m++) {
+        btns[m].classList.remove('active');
+        if (btns[m].getAttribute('data-view') === view) btns[m].classList.add('active');
+      }
+      try {
+        if (typeof renderKnowledgeBase === 'function') renderKnowledgeBase(view);
+      } catch(e) { console.error('Knowledge render error:', e); }
+    }
+
+    // Init — start on home page
+    navigateTo('home');
+  </script>
+</body>
+</html>

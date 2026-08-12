@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head><title>Test</title></head>
+<body style="background:#000;color:#fff;font-family:Arial;padding:2rem;">
+  <h1>Test Page</h1>
+  <p>If you can see this, HTML works.</p>
+  <button onclick="document.getElementById('result').textContent='JS works! ' + new Date().toLocaleString();" style="padding:1rem 2rem;font-size:1.2rem;background:gold;border:none;cursor:pointer;border-radius:8px;">Click Me</button>
+  <p id="result" style="margin-top:1rem;color:lime;"></p>
+  <hr style="margin:2rem 0;">
+  <h2>Loading CSS test...</h2>
+  <link rel="stylesheet" href="style.css">
+  <p class="btn btn-primary" style="display:inline-block;margin-top:1rem;">If this is styled gold, CSS loaded.</p>
+  <hr style="margin:2rem 0;">
+  <h2>Loading app.js test...</h2>
+  <script>
+    window.onerror = function(msg, url, line, col, error) {
+      document.getElementById('js-errors').textContent = 'ERROR: ' + msg + ' at line ' + line;
+      return false;
+    };
+  </script>
+  <p id="js-errors" style="color:red;font-weight:bold;"></p>
+  <script src="app.js"></script>
+  <script>
+    if (typeof PARTS_DATABASE !== 'undefined') {
+      document.getElementById('js-result').textContent = 'app.js loaded! ' + PARTS_DATABASE.length + ' parts in database. STATE exists: ' + (typeof STATE !== 'undefined');
+    } else {
+      document.getElementById('js-result').textContent = 'app.js FAILED to load PARTS_DATABASE';
+    }
+  </script>
+  <p id="js-result" style="color:cyan;font-weight:bold;"></p>
+</body>
+</html>
