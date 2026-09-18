@@ -1,5 +1,5 @@
 /* ==========================================================================
-   I ❤️ CARBs - Premium Dark Mode Stylesheet
+   Showgone - Premium Dark Mode Stylesheet
    ========================================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
@@ -1029,13 +1029,7 @@ img {
   font-weight: 900;
   margin-bottom: 1rem;
   letter-spacing: -0.03em;
-  background: linear-gradient(135deg, var(--text-primary) 40%, var(--accent));
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-.hero-title .heart {
-  -webkit-text-fill-color: #ef4444;
+  color: var(--text-primary);
 }
 
 .hero-tagline {

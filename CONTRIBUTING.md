@@ -1,6 +1,6 @@
-# Contributing to I ❤️ CARBs
+# Contributing to Showgone
 
-Thank you for your interest in contributing to **I ❤️ CARBs**! We welcome contributions from developers, vehicle enthusiasts, and compliance experts.
+Thank you for your interest in contributing to **Showgone**! We welcome contributions from developers, vehicle enthusiasts, and compliance experts.
 
 ---
 

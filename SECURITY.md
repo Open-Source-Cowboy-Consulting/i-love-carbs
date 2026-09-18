@@ -22,4 +22,4 @@ Please do not disclose security vulnerabilities publicly until they have been ad
 
 ## Policy & Privacy
 
-**I ❤️ CARBs** is a client-side static web application. All user vehicle data, modifications, and smog dates are stored strictly in your browser's local `localStorage`. No personal data is transmitted to external backend servers.
+**Showgone** is a client-side static web application. All user vehicle data, modifications, and smog dates are stored strictly in your browser's local `localStorage`. No personal data is transmitted to external backend servers.
