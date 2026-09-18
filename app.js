@@ -360,7 +360,7 @@ document.addEventListener('DOMContentLoaded', function() {
     populateVehicleDropdowns();
     renderGarage();
     loadSmogDate();
-    showToast('Welcome to the CARB Compliance Tool!', 'success');
+    showToast('Welcome to Showgone!', 'success');
   } catch (e) {
     console.error('Init error:', e);
   }
@@ -1045,7 +1045,7 @@ function exportBuildText() {
   var parts = STATE.installedParts || [];
   var lines = [
     '═══════════════════════════════════════',
-    'I ❤️ CARBs — Vehicle Build Summary',
+    'Showgone — Vehicle Build Summary',
     '═══════════════════════════════════════',
     'Generated: ' + new Date().toLocaleString(),
     '',

@@ -1,9 +1,9 @@
-# I ❤️ CARBs — California Emissions & CARB EO Compliance Tool
+# Showgone — California Emissions & CARB EO Compliance Tool
 
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 [![Live Demo](https://img.shields.io/badge/Demo-Live_App-brightgreen.svg)](https://open-source-cowboy-consulting.github.io/i-love-carbs/)
 
-**I ❤️ CARBs** is a lightweight, zero-dependency Single Page Application (SPA) designed to help truck owners (Silverado, F-150, Tundra, Tacoma, Colorado, Ranger, Avalanche, etc.) navigate California Air Resources Board (CARB) aftermarket part compliance, Executive Order (EO) verifications, smog check preparations, and BAR referee appointments.
+**Showgone** is a lightweight, zero-dependency Single Page Application (SPA) designed to help truck owners (Silverado, F-150, Tundra, Tacoma, Colorado, Ranger, Avalanche, etc.) navigate California Air Resources Board (CARB) aftermarket part compliance, Executive Order (EO) verifications, smog check preparations, and BAR referee appointments.
 
 ---
 
@@ -43,7 +43,7 @@ Access the hosted web application anytime at:
 
 ## 🛠️ Local Development & Running
 
-Because **I ❤️ CARBs** is built with Vanilla HTML5, CSS3, and JavaScript, no build step or node_modules installation is required!
+Because **Showgone** is built with Vanilla HTML5, CSS3, and JavaScript, no build step or node_modules installation is required!
 
 1. **Clone the repository**:
    ```bash
