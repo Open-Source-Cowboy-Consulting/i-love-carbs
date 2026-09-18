@@ -1029,13 +1029,7 @@ img {
   font-weight: 900;
   margin-bottom: 1rem;
   letter-spacing: -0.03em;
-  background: linear-gradient(135deg, var(--text-primary) 40%, var(--accent));
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-.hero-title .heart {
-  -webkit-text-fill-color: #ef4444;
+  color: var(--text-primary);
 }
 
 .hero-tagline {
